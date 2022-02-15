@@ -1,9 +1,19 @@
-import { Avatar, IconButton } from '@mui/material';
+import { Avatar, Button, IconButton } from '@mui/material';
 import styled from 'styled-components';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import ChatIcon from '@mui/icons-material/Chat';
+import SearchIcon from '@mui/icons-material/Search';
+import * as EmailValidator from 'email-validator';
 
 function Sidebar() {
+	const createChat = () => {
+		const input = prompt('Please enter an email address for the user you wish to chat with');
+		if (!input) return null;
+
+		if (EmailValidator.validate(input)) {
+		}
+	};
+
 	return (
 		<Container>
 			<Header>
@@ -17,6 +27,13 @@ function Sidebar() {
 					</IconButton>
 				</IconsContainer>
 			</Header>
+			<Search>
+				<SearchIcon />
+				<SearchInput placeholder="Search in chats" />
+			</Search>
+			<SidebarButton onClick={createChat}>Start a new chat</SidebarButton>
+
+			{/* List of chats */}
 		</Container>
 	);
 }
@@ -24,6 +41,29 @@ function Sidebar() {
 export default Sidebar;
 
 const Container = styled.div``;
+
+const Search = styled.div`
+	display: flex;
+	align-items: center;
+	padding: 20px;
+	border-radius: 2px;
+`;
+
+const SidebarButton = styled(Button)`
+	width: 100%;
+	color: black;
+	&&& {
+		// increases priority of some particular css rule
+		border-top: 1px solid whitesmoke;
+		border-bottom: 1px solid whitesmoke;
+	}
+`;
+
+const SearchInput = styled.input`
+	outline-width: 0;
+	border: none;
+	flex: 1;
+`;
 
 const Header = styled.div`
 	display: flex;
@@ -40,6 +80,9 @@ const Header = styled.div`
 
 const UserAvatar = styled(Avatar)`
 	cursor: pointer;
+	:hover {
+		opacity: 0.8;
+	}
 `;
 
 const IconsContainer = styled.div``;
