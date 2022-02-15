@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import logoPic from '../assets/wapplogo.png';
 import { Button } from '@mui/material';
-import { auth, provider, signInWithPopup } from '../firebase';
+import { auth, provider } from '../firebase';
+import { signInWithPopup } from 'firebase/auth';
 
 function Login() {
 	const signIn = () => {
