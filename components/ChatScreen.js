@@ -13,10 +13,12 @@ import Message from './Message';
 import { useState } from 'react';
 import getRecipientEmail from '../utils/getRecipientEmail';
 import TimeAgo from 'timeago-react';
+import { useRef } from 'react';
 
 function ChatScreen({ chat, messages }) {
 	const [user] = useAuthState(auth);
 	const [input, setInput] = useState('');
+	const endOfMessageRef = useRef(null);
 
 	const router = useRouter();
 	const [messagesSnapshot] = useCollection(
@@ -50,6 +52,13 @@ function ChatScreen({ chat, messages }) {
 		}
 	};
 
+	const scrollToBottom = () => {
+		endOfMessageRef.current.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		});
+	};
+
 	const SendMessage = e => {
 		e.preventDefault();
 
@@ -67,6 +76,7 @@ function ChatScreen({ chat, messages }) {
 			photoURL: user.photoURL
 		});
 		setInput('');
+		scrollToBottom();
 	};
 
 	const recipient = recipientSnapshot?.docs?.[0]?.data();
@@ -106,7 +116,7 @@ function ChatScreen({ chat, messages }) {
 			</Header>
 			<MessageContainer>
 				{showMessages()}
-				<EndOfMessage />
+				<EndOfMessage ref={endOfMessageRef} />
 			</MessageContainer>
 			<InputContainer>
 				<InsertEmoticonIcon />
