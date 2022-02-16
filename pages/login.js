@@ -4,20 +4,10 @@ import Image from 'next/image';
 import logoPic from '../assets/wapplogo.png';
 import { Button } from '@mui/material';
 import { auth, provider } from '../firebase';
-import { signInWithPopup } from 'firebase/auth';
 
 function Login() {
 	const signIn = () => {
-		signInWithPopup(auth, provider).catch(error => {
-			// Handle Errors here.
-			const errorCode = error.code;
-			const errorMessage = error.message;
-			// The email of the user's account used.
-			const email = error.email;
-			// The AuthCredential type that was used.
-
-			console.log(error);
-		});
+		auth.signInWithPopup(provider).catch(alert);
 	};
 
 	return (
